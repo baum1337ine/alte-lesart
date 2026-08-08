@@ -93,6 +93,29 @@ def main() -> int:
             for core in CORE:
                 if core not in text:
                     errors.append(f"{rel}: missing core navigation link {core}")
+        if rel.parts[:2] == ("werke", "fuehrer-der-unschluessigen") and rel.name.startswith("kapitel-"):
+            chapter_match = re.search(r"kapitel-(\d{3})\.html", rel.name)
+            current_chapter = int(chapter_match.group(1)) if chapter_match else None
+            thread = re.search(r'<div class="chapter-thread"[^>]*>(.*?)</div>', text, re.S)
+            if not thread:
+                errors.append(f"{rel}: missing chapter-thread navigation")
+            else:
+                thread_html = thread.group(1)
+                if len(re.findall(r"<a\b", thread_html)) != 20:
+                    errors.append(f"{rel}: chapter-thread must contain 20 clickable links")
+                if re.search(r"<span\b", thread_html):
+                    errors.append(f"{rel}: chapter-thread contains non-clickable span")
+                for i in range(1, 21):
+                    href = f'{BASE}/werke/fuehrer-der-unschluessigen/kapitel-{i:03d}.html'
+                    if href not in thread_html:
+                        errors.append(f"{rel}: missing clickable chapter number {i}")
+                    if f'aria-label="Kapitel I,{i} öffnen"' not in thread_html:
+                        errors.append(f"{rel}: missing accessible label for chapter number {i}")
+                if current_chapter and 'aria-current="page"' not in thread_html:
+                    errors.append(f"{rel}: active chapter lacks aria-current")
+            chips = re.search(r'<div class="chips">(.*?)</div>', text, re.S)
+            if not chips or len(re.findall(r'<a class="chip"', chips.group(1))) != 4:
+                errors.append(f"{rel}: metadata chips must all be clickable links")
         if HEBREW_RE.search(text) and not re.search(r"Quelle|Status|Ibn-Tibbon|Quellen", text, re.I):
             errors.append(f"{rel}: Hebrew text without visible source/status marker")
     if errors:
