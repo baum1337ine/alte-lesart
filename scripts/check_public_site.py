@@ -101,18 +101,21 @@ def main() -> int:
                 errors.append(f"{rel}: missing chapter-thread navigation")
             else:
                 thread_html = thread.group(1)
-                if len(re.findall(r"<a\b", thread_html)) != 20:
-                    errors.append(f"{rel}: chapter-thread must contain 20 clickable links")
+                if len(re.findall(r"<a\b", thread_html)) != 40:
+                    errors.append(f"{rel}: chapter-thread must contain 40 clickable links")
                 if re.search(r"<span\b", thread_html):
                     errors.append(f"{rel}: chapter-thread contains non-clickable span")
-                for i in range(1, 21):
+                for i in range(1, 41):
                     href = f'{BASE}/werke/fuehrer-der-unschluessigen/kapitel-{i:03d}.html'
                     if href not in thread_html:
                         errors.append(f"{rel}: missing clickable chapter number {i}")
                     if f'aria-label="Kapitel I,{i} öffnen"' not in thread_html:
                         errors.append(f"{rel}: missing accessible label for chapter number {i}")
-                if current_chapter and 'aria-current="page"' not in thread_html:
-                    errors.append(f"{rel}: active chapter lacks aria-current")
+                if current_chapter:
+                    active_href = f'{BASE}/werke/fuehrer-der-unschluessigen/kapitel-{current_chapter:03d}.html'
+                    active_link = re.search(rf'<a\b(?=[^>]*href="{re.escape(active_href)}")[^>]*>', thread_html)
+                    if not active_link or 'aria-current="page"' not in active_link.group(0):
+                        errors.append(f"{rel}: active chapter lacks aria-current")
             chips = re.search(r'<div class="chips">(.*?)</div>', text, re.S)
             if not chips or len(re.findall(r'<a class="chip"', chips.group(1))) != 4:
                 errors.append(f"{rel}: metadata chips must all be clickable links")
