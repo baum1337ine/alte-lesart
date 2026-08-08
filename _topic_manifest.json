@@ -1,0 +1,166 @@
+{
+  "qid": "Q1140185",
+  "topic": "Führer der Unschlüssigen",
+  "he_wikisource": {
+    "title": "מורה נבוכים",
+    "url": "https://he.wikisource.org/wiki/%D7%9E%D7%95%D7%A8%D7%94_%D7%A0%D7%91%D7%95%D7%9B%D7%99%D7%9D",
+    "wikisource_links": [
+      "מורה נבוכים (אבן תיבון)",
+      "מורה נבוכים (אבן תיבון)/חלק א",
+      "מורה נבוכים (אבן תיבון)/חלק ב",
+      "מורה נבוכים (אבן תיבון)/חלק ג",
+      "מורה נבוכים (אבן תיבון)/פתיחת אבן תיבון",
+      "מורה נבוכים (אבן תיבון)/פתיחת הרמב\"ם",
+      "מורה נבוכים (אלחריזי)",
+      "מורה נבוכים (מקור)",
+      "מורה נבוכים (מקור)/מבוא",
+      "מורה נבוכים (קאפח)",
+      "מורה נבוכים חלק א (אלחריזי)",
+      "מורה נבוכים חלק א (מקור)",
+      "מורה נבוכים חלק ב (אלחריזי)",
+      "מורה נבוכים חלק ב (מקור)",
+      "מורה נבוכים חלק ג (אלחריזי)",
+      "מורה נבוכים חלק ג (מקור)",
+      "פרשני מורה נבוכים"
+    ]
+  },
+  "he_wikipedia": {
+    "title": "מורה הנבוכים",
+    "url": "https://he.wikipedia.org/wiki/%D7%9E%D7%95%D7%A8%D7%94_%D7%94%D7%A0%D7%91%D7%95%D7%9B%D7%99%D7%9D"
+  },
+  "de_wikipedia": {
+    "title": "Führer der Unschlüssigen",
+    "url": "https://de.wikipedia.org/wiki/F%C3%BChrer_der_Unschl%C3%BCssigen"
+  },
+  "imports": {
+    "ibn_tibbon_structure": {
+      "fetched_at": "2026-08-08T10:59:10",
+      "pages": [
+        "מורה נבוכים (אבן תיבון)",
+        "מורה נבוכים (אבן תיבון)/חלק א",
+        "מורה נבוכים (אבן תיבון)/חלק ב",
+        "מורה נבוכים (אבן תיבון)/חלק ג"
+      ],
+      "chapter_counts": {
+        "Teil I": 76,
+        "Teil II": 49,
+        "Teil III": 55
+      },
+      "pilot_chapter": "מורה נבוכים (אבן תיבון)/חלק א/פרק א",
+      "status": "chapter_1_to_10_translated_draft; full_chapter_tree_queued_source_stubs; website_ready_baseline",
+      "chapter_2": "מורה נבוכים (אבן תיבון)/חלק א/פרק ב"
+    }
+  },
+  "next_actions": [
+    "Write German translated_draft for Teil I Kapitel 11–20",
+    "Continue source import for remaining Teil II 35–49 and Teil III 1–55",
+    "Build glossary from imported source headings"
+  ],
+  "publication": {
+    "github_pages_ready_baseline": true,
+    "created_files": [
+      "index.md",
+      "README.md",
+      "LICENSE.md",
+      "NOTICE.md",
+      "_config.yml",
+      "06 Publikationsstandard und Lizenzen.md"
+    ],
+    "license_default": "CC BY-SA 4.0 for original German work, unless otherwise noted",
+    "required_page_sections": [
+      "frontmatter",
+      "navigation",
+      "BLUF",
+      "deutsche Darstellung",
+      "Quellen und Lizenz"
+    ]
+  },
+  "batch_runs": [
+    {
+      "date": "2026-08-08",
+      "description": "Publication-ready batch: translated drafts for Teil I chapters 3-10; queued source stubs for full Ibn-Tibbon chapter tree; quality/status index.",
+      "created_count": 188,
+      "updated_count": 0,
+      "fetched": {
+        "3": {
+          "title": "מורה נבוכים (אבן תיבון)/חלק א/פרק ג",
+          "raw_chars": 1376,
+          "url": "https://he.wikisource.org/wiki/%D7%9E%D7%95%D7%A8%D7%94_%D7%A0%D7%91%D7%95%D7%9B%D7%99%D7%9D_%28%D7%90%D7%91%D7%9F_%D7%AA%D7%99%D7%91%D7%95%D7%9F%29/%D7%97%D7%9C%D7%A7_%D7%90/%D7%A4%D7%A8%D7%A7_%D7%92"
+        },
+        "4": {
+          "title": "מורה נבוכים (אבן תיבון)/חלק א/פרק ד",
+          "raw_chars": 2076,
+          "url": "https://he.wikisource.org/wiki/%D7%9E%D7%95%D7%A8%D7%94_%D7%A0%D7%91%D7%95%D7%9B%D7%99%D7%9D_%28%D7%90%D7%91%D7%9F_%D7%AA%D7%99%D7%91%D7%95%D7%9F%29/%D7%97%D7%9C%D7%A7_%D7%90/%D7%A4%D7%A8%D7%A7_%D7%93"
+        },
+        "5": {
+          "title": "מורה נבוכים (אבן תיבון)/חלק א/פרק ה",
+          "raw_chars": 3078,
+          "url": "https://he.wikisource.org/wiki/%D7%9E%D7%95%D7%A8%D7%94_%D7%A0%D7%91%D7%95%D7%9B%D7%99%D7%9D_%28%D7%90%D7%91%D7%9F_%D7%AA%D7%99%D7%91%D7%95%D7%9F%29/%D7%97%D7%9C%D7%A7_%D7%90/%D7%A4%D7%A8%D7%A7_%D7%94"
+        },
+        "6": {
+          "title": "מורה נבוכים (אבן תיבון)/חלק א/פרק ו",
+          "raw_chars": 751,
+          "url": "https://he.wikisource.org/wiki/%D7%9E%D7%95%D7%A8%D7%94_%D7%A0%D7%91%D7%95%D7%9B%D7%99%D7%9D_%28%D7%90%D7%91%D7%9F_%D7%AA%D7%99%D7%91%D7%95%D7%9F%29/%D7%97%D7%9C%D7%A7_%D7%90/%D7%A4%D7%A8%D7%A7_%D7%95"
+        },
+        "7": {
+          "title": "מורה נבוכים (אבן תיבון)/חלק א/פרק ז",
+          "raw_chars": 2090,
+          "url": "https://he.wikisource.org/wiki/%D7%9E%D7%95%D7%A8%D7%94_%D7%A0%D7%91%D7%95%D7%9B%D7%99%D7%9D_%28%D7%90%D7%91%D7%9F_%D7%AA%D7%99%D7%91%D7%95%D7%9F%29/%D7%97%D7%9C%D7%A7_%D7%90/%D7%A4%D7%A8%D7%A7_%D7%96"
+        },
+        "8": {
+          "title": "מורה נבוכים (אבן תיבון)/חלק א/פרק ח",
+          "raw_chars": 1452,
+          "url": "https://he.wikisource.org/wiki/%D7%9E%D7%95%D7%A8%D7%94_%D7%A0%D7%91%D7%95%D7%9B%D7%99%D7%9D_%28%D7%90%D7%91%D7%9F_%D7%AA%D7%99%D7%91%D7%95%D7%9F%29/%D7%97%D7%9C%D7%A7_%D7%90/%D7%A4%D7%A8%D7%A7_%D7%97"
+        },
+        "9": {
+          "title": "מורה נבוכים (אבן תיבון)/חלק א/פרק ט",
+          "raw_chars": 1463,
+          "url": "https://he.wikisource.org/wiki/%D7%9E%D7%95%D7%A8%D7%94_%D7%A0%D7%91%D7%95%D7%9B%D7%99%D7%9D_%28%D7%90%D7%91%D7%9F_%D7%AA%D7%99%D7%91%D7%95%D7%9F%29/%D7%97%D7%9C%D7%A7_%D7%90/%D7%A4%D7%A8%D7%A7_%D7%98"
+        },
+        "10": {
+          "title": "מורה נבוכים (אבן תיבון)/חלק א/פרק י",
+          "raw_chars": 2617,
+          "url": "https://he.wikisource.org/wiki/%D7%9E%D7%95%D7%A8%D7%94_%D7%A0%D7%91%D7%95%D7%9B%D7%99%D7%9D_%28%D7%90%D7%91%D7%9F_%D7%AA%D7%99%D7%91%D7%95%D7%9F%29/%D7%97%D7%9C%D7%A7_%D7%90/%D7%A4%D7%A8%D7%A7_%D7%99"
+        }
+      },
+      "quality_policy": "High-volume pages are allowed as source stubs only; no chapter marked translated_draft without German BLUF/darstellung and source block."
+    },
+    {
+      "date": "2026-08-08",
+      "id": "batch_002_source_import_100",
+      "description": "Imported full Hebrew Wikisource raw texts into next 100 chapter pages: Teil I 11-76 and Teil II 1-34.",
+      "success_count": 100,
+      "error_count": 0,
+      "errors": [],
+      "status": "source_imported",
+      "quality_policy": "Source-complete pages are not marked as German translations; translated_draft requires German BLUF/darstellung."
+    }
+  ],
+  "last_updated": "2026-08-08",
+  "status_summary": {
+    "translated_draft": 20,
+    "source_imported": 160,
+    "chapter_pages": 180,
+    "md_files_total": 222,
+    "missing_license": 0,
+    "missing_navigation": 0,
+    "source_imported_missing_raw": 0,
+    "overview_original_title_mismatch": 0
+  },
+  "batches": [
+    {
+      "name": "Batch 003",
+      "date": "2026-08-08",
+      "source_imported": 70,
+      "translated_draft": 10,
+      "scope": "Teil II 35-49; Teil III 1-55; Teil I 11-20 drafts"
+    },
+    {
+      "name": "Batch 003 final verified",
+      "date": "2026-08-08",
+      "source_imported_new": 70,
+      "translated_draft_new": 10,
+      "verification": "0 missing license/navigation/raw; exact overview mappings for II/III verified"
+    }
+  ]
+}

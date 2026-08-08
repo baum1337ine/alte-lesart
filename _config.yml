@@ -1,0 +1,17 @@
+title: Führer der Unschlüssigen
+lang: de
+description: Deutsches Quellen- und Wissensnetz zu Maimonides' Führer der Unschlüssigen / מורה נבוכים
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - README.md
+  - LICENSE.md
+  - NOTICE.md
+exclude:
+  - _topic_manifest.json
+  - _templates
