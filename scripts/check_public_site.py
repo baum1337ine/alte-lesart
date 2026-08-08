@@ -101,11 +101,11 @@ def main() -> int:
                 errors.append(f"{rel}: missing chapter-thread navigation")
             else:
                 thread_html = thread.group(1)
-                if len(re.findall(r"<a\b", thread_html)) != 50:
-                    errors.append(f"{rel}: chapter-thread must contain 50 clickable links")
+                if len(re.findall(r"<a\b", thread_html)) != 60:
+                    errors.append(f"{rel}: chapter-thread must contain 60 clickable links")
                 if re.search(r"<span\b", thread_html):
                     errors.append(f"{rel}: chapter-thread contains non-clickable span")
-                for i in range(1, 51):
+                for i in range(1, 61):
                     href = f'{BASE}/werke/fuehrer-der-unschluessigen/kapitel-{i:03d}.html'
                     if href not in thread_html:
                         errors.append(f"{rel}: missing clickable chapter number {i}")
