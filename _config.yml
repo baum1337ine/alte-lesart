@@ -1,8 +1,7 @@
-title: Führer der Unschlüssigen
+title: Alte Lesart
 lang: de
-description: Deutsches Quellen- und Wissensnetz zu Maimonides' Führer der Unschlüssigen / מורה נבוכים
+description: Ein deutsches Quellen-, Lese- und Wissensnetz für alte hebräische Texte.
 markdown: kramdown
-theme: minima
 plugins:
   - jekyll-relative-links
 relative_links:
@@ -15,3 +14,8 @@ include:
 exclude:
   - _topic_manifest.json
   - _templates
+  - Gemfile
+  - Gemfile.lock
+  - scripts
+  - vendor
+permalink: pretty

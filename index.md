@@ -1,37 +1,87 @@
 ---
 layout: default
-title: Führer der Unschlüssigen
+title: Alte Lesart
 permalink: /
+wide: true
 license: CC-BY-SA-4.0
-wikidata: Q1140185
 ---
 
-# Führer der Unschlüssigen — deutsches Quellen- und Wissensnetz
+<section class="hero">
+  <span class="hero-kicker">Quellen lesen · Begriffe verfolgen · Editionen unterscheiden</span>
+  <h1>Alte hebräische Texte als lebendiges deutsches Wissensnetz.</h1>
+  <p class="hero-lede">Nicht nur eine Übersetzung, sondern ein benutzbares Paket: Primärtexte, deutsche Arbeitsfassungen, Quellenkritik, Personen, Begriffe, Lesepfade und Obsidian-Links — sauber genug für Veröffentlichung, freundlich genug zum Stöbern.</p>
+  <div class="hero-actions">
+    <a class="button primary" href="Sammlung/">Sammlung erkunden</a>
+    <a class="button" href="Führer-der-Unschlüssigen/">Erstes Werk öffnen</a>
+    <a class="button" href="Lesepfade/">Mit einem Lesepfad starten</a>
+  </div>
+</section>
 
-Dies ist der Website-Einstieg für das thematische Obsidian-Dossier zu Maimonides’ *Führer der Unschlüssigen* / *מורה נבוכים*.
+<section class="card-grid" aria-label="Was diese Website bietet">
+  <a class="feature-card" href="Sammlung/">
+    <span class="card-icon">א</span>
+    <h3>Ganzheitliche Sammlung</h3>
+    <p>Ein wachsender Kanon alter hebräischer Texte: Philosophie, Bibelkommentar, Halacha, Midrasch, Pijjut, Ethik und Mystik — nach Themen statt als Datenmüll.</p>
+  </a>
+  <a class="feature-card" href="Lesepfade/">
+    <span class="card-icon">ל</span>
+    <h3>Lesepfade statt Dateiwüste</h3>
+    <p>Geführte Einstiege: Gottessprache, Prophetie, Erkenntnis, Schöpfung, Gesetz, Seele, Exil und Trost.</p>
+  </a>
+  <a class="feature-card" href="Status/">
+    <span class="card-icon">✓</span>
+    <h3>Ehrlicher Status</h3>
+    <p>Jede Seite zeigt, ob sie Rohquelle, deutscher Entwurf, prüfbedürftig oder geprüft ist. Keine Fake-Fertigstellung.</p>
+  </a>
+</section>
 
-## Roter Faden
+<section class="split">
+  <div class="panel">
+    <p class="eyebrow">Aktueller Schwerpunkt</p>
+    <h2>Führer der Unschlüssigen / <span class="hebrew">מורה נבוכים</span></h2>
+    <p>Der erste vollständig strukturierte Werkbereich ist Maimonides’ <em>Führer der Unschlüssigen</em> in der Ibn-Tibbon-Fassung. Die komplette Kapitelstruktur liegt lokal vor; die ersten Kapitel sind bereits deutsch ausgearbeitet.</p>
+    <div class="tag-row">
+      <span class="tag">180 Quellenknoten</span>
+      <span class="tag">20 deutsche Entwürfe</span>
+      <span class="tag">Wikidata Q1140185</span>
+      <span class="tag">Obsidian-ready</span>
+    </div>
+    <p><a class="button primary" href="Führer-der-Unschlüssigen/">Werk-Dossier öffnen</a></p>
+  </div>
+  <div class="panel tinted">
+    <p class="eyebrow">Prinzip</p>
+    <h2>Alt heißt nicht unklar.</h2>
+    <p>Die Website soll Spaß machen, weil sie die Einstiegshürden senkt: erst Orientierung, dann Original, dann Begriffe, dann Vertiefung.</p>
+    <ol>
+      <li>Keine Vermischung von Fassungen.</li>
+      <li>Keine ungeprüften modernen Kommentare.</li>
+      <li>Jede Quelle mit Lizenz- und Herkunftsblock.</li>
+      <li>Deutsch lesbar, hebräisch rückprüfbar.</li>
+    </ol>
+  </div>
+</section>
 
-1. **Orientierung:** [Themenindex](00%20Themenindex.md) und [Überblick](01%20Überblick%20-%20Führer%20der%20Unschlüssigen.md)
-2. **Quellenlage:** [Wikisource-Ausgaben](02%20Wikisource%20-%20מורה%20נבוכים.md) und [Wikipedia-Kontext](03%20Wikipedia%20-%20Kontext.md)
-3. **Werkstruktur:** [Ibn-Tibbon-Struktur](05%20Ibn%20Tibbon%20-%20Struktur.md)
-4. **Kapitelarbeit:** [Teil I — Kapitelübersicht](Ibn%20Tibbon/Teil%20I%20-%20Kapitelübersicht.md)
-5. **Pilotkapitel:** [Teil I Kapitel 1](Ibn%20Tibbon/Teil%20I%20Kapitel%20001%20-%20צלם%20ודמות.md) und [Teil I Kapitel 2](Ibn%20Tibbon/Teil%20I%20Kapitel%20002%20-%20אמת%20ושקר%20טוב%20ורע.md)
-6. **Begriffe und Personen:** [Glossar Kapitel 1](Begriffe/Glossar%20-%20Teil%20I%20Kapitel%201.md), [Glossar Kapitel 2](Begriffe/Glossar%20-%20Teil%20I%20Kapitel%202.md), [Maimonides](Personen/Maimonides%20-%20Rambam.md)
+<section>
+  <p class="eyebrow">Nächste Ausbaustufen</p>
+  <div class="card-grid">
+    <div class="work-card">
+      <h3>Tanach-nahe Grundtexte</h3>
+      <p>Ausgewählte biblische Bücher, klassische Begriffe, Kommentarachsen.</p>
+      <span class="status-pill soon">geplant</span>
+    </div>
+    <div class="work-card">
+      <h3>Maimonides-Korpus</h3>
+      <p>More Nevuchim, Mischne Tora-Auszüge, Briefe, Begriffe und Personen.</p>
+      <span class="status-pill warn">im Aufbau</span>
+    </div>
+    <div class="work-card">
+      <h3>Ethik, Poesie, Midrasch</h3>
+      <p>Avot, Pijjutim, Midraschtexte und thematische Lesepfade.</p>
+      <span class="status-pill soon">Roadmap</span>
+    </div>
+  </div>
+</section>
 
-## Publikationsprinzip
-
-Dieses Projekt ist so aufgebaut, dass es später als GitHub-Repository über GitHub Pages veröffentlicht werden kann. Die Markdown-Dateien enthalten Frontmatter, Quellenblöcke, Lizenzhinweise und webtaugliche relative Links.
-
-Siehe: [Publikationsstandard und Lizenzen](06%20Publikationsstandard%20und%20Lizenzen.md)
----
-
-## Quellen und Lizenz
-
-**Primärtext:** Hebräische Wikisource, Ibn-Tibbon-Fassung des *מורה נבוכים*. Historischer Quellentext nach bestem Wissen gemeinfrei; Wikisource-Seiten- und Bearbeitungshistorie separat beachten.
-
-**Kontextquellen:** Wikipedia/Wikidata, sofern im Quellenkopf oder in den Links genannt; Wikipedia-Inhalte stehen unter CC BY-SA 4.0.
-
-**Eigene deutsche Bearbeitung:** Arbeitsübersetzung, Strukturierung und Darstellung dieses Obsidian-/Website-Projekts: CC BY-SA 4.0, sofern nicht anders angegeben.
-
-**Wichtig:** Moderne Übersetzungen, moderne Kommentare und moderne editorische Zusätze werden nicht ungeprüft übernommen. Jede Seite muss ihre verwendeten Quellen klar ausweisen.
+<section class="source-note">
+  <strong>Lizenz- und Qualitätsversprechen:</strong> Historische Primärtexte werden quellenkritisch von modernen editorischen Zusätzen getrennt. Eigene deutsche Bearbeitung steht unter CC BY-SA 4.0, sofern nicht anders angegeben. Wikimedia-Kontext wird attributiert und nicht blind übernommen.
+</section>
