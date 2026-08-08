@@ -67,6 +67,9 @@ def main() -> int:
             "focus mode styles present": "body.focus-mode",
             "reading flow hook styles present": ".flow-hook",
             "return cue styles present": ".return-cue",
+            "chapter thread links present": ".chapter-thread a",
+            "mobile first heading protected": "main>.section:first-child>h2{display:block;width:100%",
+            "mobile intro protected": "main>.section:first-child>.section-intro,main>.section:first-child>.lead{width:100%",
         }
         for label, needle in contrast_guards.items():
             if needle not in css:
