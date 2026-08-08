@@ -64,6 +64,9 @@ def main() -> int:
             "first section intro protected on dark background": "main>.section:first-child>.section-intro,main>.section:first-child>.lead{display:block",
             "first section intro light text": "color:#fff4d0;background:rgba(18,13,9,.56)",
             "geometry classes visibly vary": "--geo-transform:rotate(",
+            "focus mode styles present": "body.focus-mode",
+            "reading flow hook styles present": ".flow-hook",
+            "return cue styles present": ".return-cue",
         }
         for label, needle in contrast_guards.items():
             if needle not in css:
