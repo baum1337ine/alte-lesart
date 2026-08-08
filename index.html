@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Serif+Hebrew:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/alte-lesart/assets/css/alte-lesart.css">
 </head>
-<body>
+<body class="">
   <a class="skip-link" href="#main">Zum Inhalt springen</a>
   <header class="topbar">
     <a class="brand" href="/alte-lesart/index.html" aria-label="Alte Lesart Startseite">
@@ -19,61 +19,78 @@
       <span><strong>Alte Lesart</strong><small>Hebräische Quellen. Deutsch lesbar.</small></span>
     </a>
     <button class="menu-button" type="button" aria-expanded="false" aria-controls="nav">Menü</button>
-    <nav id="nav" class="nav" aria-label="Hauptnavigation"><a class="active" href="/alte-lesart/index.html">Start</a>
+    <nav id="nav" class="nav" aria-label="Hauptnavigation">
+<a class="" href="/alte-lesart/index.html">Start</a>
 <a class="" href="/alte-lesart/sammlung.html">Sammlung</a>
 <a class="" href="/alte-lesart/lesepfade.html">Lesepfade</a>
+<a class="" href="/alte-lesart/themen/">Themen</a>
+<a class="" href="/alte-lesart/personen/">Personen</a>
 <a class="" href="/alte-lesart/status.html">Status</a>
-<a class="" href="/alte-lesart/quellen.html">Quellen</a></nav>
+<a class="" href="/alte-lesart/quellen.html">Quellen</a>
+    </nav>
   </header>
   <main id="main"><section class="hero">
   <div class="hero-copy">
-    <span class="kicker">Ein Quellen-Abenteuer statt Textfriedhof</span>
-    <h1>Alte hebräische Texte, so gebaut, dass man weiterlesen will.</h1>
-    <p>Alte Lesart macht historische hebräische Quellen auf Deutsch zugänglich: nicht als endlose Notizsammlung, sondern als kuratierte HTML-Welt mit Lesepfaden, Werkseiten, Quellenklappen und klaren nächsten Schritten.</p>
-    <div class="actions">
-      <a class="button primary" href="/alte-lesart/sammlung.html">Sammlung öffnen</a>
-      <a class="button" href="/alte-lesart/werke/fuehrer-der-unschluessigen/">Mit Maimonides starten</a>
-      <a class="button" href="/alte-lesart/lesepfade.html">Nach Fragen lesen</a>
-    </div>
+    <span class="eyebrow">Digitale Bibliothek</span>
+    <h1>Alte hebräische Texte, neu lesbar.</h1>
+    <p class="lead">Alte Lesart sammelt Quellen nicht als Rohdaten, sondern als kuratierte Einstiege: deutsch lesbar, quellenkritisch, logisch verlinkt.</p>
+    <div class="actions"><a class="button primary" href="/alte-lesart/werke/fuehrer-der-unschluessigen/kapitel-001.html">Mit Kapitel 1 starten</a><a class="button secondary" href="/alte-lesart/lesepfade.html">Lesepfade ansehen</a></div>
   </div>
-  <aside class="artifact" aria-label="Beispiel einer Leseseite">
-    <div class="artifact-card">
-      <div class="chips"><span class="chip">Lesefassung</span><span class="chip">Quelle prüfbar</span><span class="chip">Kapitel 1</span></div>
-      <p class="hebrew">צלם ודמות</p>
-      <h2>Was heißt „Bild Gottes“?</h2>
-      <p>Maimonides beginnt nicht mit Spekulation, sondern mit Sprache: Wer Bilder wörtlich nimmt, verliert den Gedanken.</p>
-      <a class="button dark" href="/alte-lesart/werke/fuehrer-der-unschluessigen/kapitel-001.html">Kapitel lesen</a>
-    </div>
+  <aside class="artifact" aria-label="Aktueller Schwerpunkt">
+    <span class="eyebrow">Aktueller Schwerpunkt</span>
+    <div class="artifact-card"><strong>Führer der Unschlüssigen</strong><p>Maimonides/Rambam über Sprache, Gotteserkenntnis, Prophetie und Vernunft.</p></div>
+    <div class="artifact-card"><strong>Erster Lesepfad</strong><p>Vom „Bild Gottes“ zu einer Sprache, die nicht am Bild hängen bleibt.</p></div>
+    <div class="artifact-card"><strong>Status</strong><p>Kapitel 1–2 sind kuratierte Entwurfsseiten; weitere Kapitel bleiben vorerst intern.</p></div>
   </aside>
 </section>
 <section class="section">
-  <h2>Eine Website für Leser, nicht für Ordnerstrukturen.</h2>
-  <p class="section-lede">Interne Markdown-Notizen, Rohimporte und Agentenpläne bleiben lokal. Online erscheinen nur saubere HTML-Seiten: interessant, logisch, verlinkt und rechtlich sauber.</p>
+  <h2>Drei Einstiege</h2>
   <div class="grid">
-    <a class="card" href="/alte-lesart/sammlung.html"><span class="icon">א</span><h3>Ganzheitliche Sammlung</h3><p>Philosophie, Kommentar, Midrasch, Halacha, Poesie und Ethik — als wachsender Kanon alter hebräischer Texte.</p></a>
-    <a class="card" href="/alte-lesart/lesepfade.html"><span class="icon">ל</span><h3>Lesepfade</h3><p>Starte mit einer Frage: Bild Gottes, Wahrheit, Prophetie, Schöpfung, Gesetz, Seele.</p></a>
-    <a class="card" href="/alte-lesart/status.html"><span class="icon">✓</span><h3>Ehrlicher Status</h3><p>Jede öffentliche Seite sagt, ob sie Lesefassung, Rohquelle oder prüfbedürftiger Entwurf ist.</p></a>
+    <a class="card link-card" href="/alte-lesart/sammlung.html" data-card>
+      <span class="eyebrow">Katalog</span>
+      <h3>Sammlung</h3>
+      <p>Werke und geplante Bereiche: Rambam, Tanach-Begriffe, Midrasch, Mussar und Dichtung.</p>
+      <span class="status-badge">öffentlich</span>
+    </a>
+    <a class="card link-card" href="/alte-lesart/lesepfade.html" data-card>
+      <span class="eyebrow">Orientierung</span>
+      <h3>Lesepfade</h3>
+      <p>Geführte Wege durch schwierige Themen — für Leser, die mit einer Frage beginnen.</p>
+      <span class="status-badge">kuratierend</span>
+    </a>
+    <a class="card link-card" href="/alte-lesart/themen/" data-card>
+      <span class="eyebrow">Netz</span>
+      <h3>Themen</h3>
+      <p>Begriffe wie Bild Gottes, Wahrheit/Gut/Böse und negative Theologie als Wissensnetz.</p>
+      <span class="status-badge">neu</span>
+    </a>
   </div>
 </section>
-<section class="section split">
-  <div class="panel">
-    <span class="kicker">Aktueller Schwerpunkt</span>
-    <h2>Führer der Unschlüssigen</h2>
-    <p>Der erste Werkbereich ist Maimonides’ <em>מורה נבוכים</em>. Online gibt es eine kuratierte Einstiegsebene und erste Leseseiten; die vollständigen Arbeitsnotizen bleiben intern.</p>
-    <div class="chips"><span class="chip">180 Quellenknoten intern</span><span class="chip">20 deutsche Entwürfe</span><span class="chip">Ibn Tibbon</span></div>
-    <a class="button dark" href="/alte-lesart/werke/fuehrer-der-unschluessigen/">Werk öffnen</a>
-  </div>
-  <div class="panel dark">
-    <h2>Das Paket wächst.</h2>
-    <p>Nicht nur Maimonides: Alte Lesart wird ein zusammenhängender Einstieg in alte hebräische Texte.</p>
-    <ul><li>Tanach-nahe Begriffe</li><li>Rambam-Korpus</li><li>Midrasch und Auslegung</li><li>Pijjut und Ethik</li></ul>
+<section class="section">
+  <h2>Warum das anders ist</h2>
+  <div class="grid">
+    <article class="card" data-card>
+      
+      <h3>Quelle bleibt sichtbar</h3>
+      <p>Hebräische Quelle, deutsche Arbeitsfassung und editorischer Status werden getrennt.</p>
+      
+    </article>
+    <article class="card" data-card>
+      
+      <h3>Leseführung statt Importlog</h3>
+      <p>Jede Seite beantwortet: Was ist hier der Gedanke, warum ist er wichtig, wohin führt er?</p>
+      
+    </article>
+    <article class="card" data-card>
+      
+      <h3>Privat und öffentlich getrennt</h3>
+      <p>Obsidian bleibt Werkstatt. GitHub Pages zeigt nur kuratierte HTML-Seiten.</p>
+      
+    </article>
   </div>
 </section></main>
   <footer class="footer">
-    <div>
-      <strong>Alte Lesart</strong><br>
-      Ein wachsendes Paket alter hebräischer Texte: kuratiert, quellenkritisch, deutsch lesbar.
-    </div>
+    <div><strong>Alte Lesart</strong><br>Ein wachsendes Paket alter hebräischer Texte: kuratiert, quellenkritisch, deutsch lesbar.</div>
     <div class="footer-links">
       <a href="/alte-lesart/quellen.html">Quellen & Lizenz</a>
       <a href="/alte-lesart/status.html">Bearbeitungsstatus</a>
