@@ -56,6 +56,22 @@ def link_to_path(href: str) -> Path | None:
 def main() -> int:
     errors = []
     pages = list(public_html_files())
+    css_path = ROOT / "assets/css/alte-lesart.css"
+    if css_path.exists():
+        css = css_path.read_text(encoding="utf-8")
+        contrast_guards = {
+            "global high-contrast eyebrow": ".eyebrow{display:inline-flex;align-items:center;gap:.45rem;color:#241306;background:#ffe1a0",
+            "first section intro protected on dark background": "main>.section:first-child>.section-intro,main>.section:first-child>.lead{display:block",
+            "first section intro light text": "color:#fff4d0;background:rgba(18,13,9,.56)",
+            "geometry classes visibly vary": "--geo-transform:rotate(",
+        }
+        for label, needle in contrast_guards.items():
+            if needle not in css:
+                errors.append(f"CSS contrast/geometry guard missing: {label}")
+        if len(set(re.findall(r"body\.geo-\d\d\{--geo:([^;]+);", css))) < 30:
+            errors.append("CSS geometry guard failed: expected 30 distinct page patterns")
+    else:
+        errors.append("Missing public CSS file assets/css/alte-lesart.css")
     for page in pages:
         text = page.read_text(encoding="utf-8")
         rel = page.relative_to(ROOT)
