@@ -102,6 +102,7 @@ def main() -> int:
     else:
         errors.append("Missing Pages workflow .github/workflows/pages.yml")
     reading_blocks = {}
+    repeated_reading_paragraphs = {}
     for page in pages:
         text = page.read_text(encoding="utf-8")
         rel = page.relative_to(ROOT)
@@ -135,6 +136,16 @@ def main() -> int:
                     errors.append(f"{rel}: duplicate reading-text matches {reading_blocks[digest]}")
                 else:
                     reading_blocks[digest] = rel
+                if len(rel.parts) >= 4 and rel.parts[2] == "teil-ii":
+                    for paragraph in re.findall(r"<p>(.*?)</p>", reading.group(1), re.S):
+                        paragraph_plain = unescape(re.sub(r"<[^>]+>", " ", paragraph))
+                        paragraph_plain = re.sub(r"\s+", " ", paragraph_plain).strip().lower()
+                        paragraph_digest = re.sub(r"[^a-zäöüß0-9 ]", "", paragraph_plain)
+                        if len(paragraph_plain.split()) >= 24:
+                            if paragraph_digest in repeated_reading_paragraphs:
+                                errors.append(f"{rel}: repeated Teil-II reading paragraph also appears in {repeated_reading_paragraphs[paragraph_digest]}")
+                            else:
+                                repeated_reading_paragraphs[paragraph_digest] = rel
             else:
                 errors.append(f"{rel}: missing reading-text block")
             chapter_match = re.search(r"kapitel-(\d{3})\.html", rel.name)
@@ -163,6 +174,11 @@ def main() -> int:
                         errors.append(f"{rel}: missing clickable chapter number {part_label},{i}")
                     if f'aria-label="Kapitel {part_label},{i} öffnen"' not in thread_html:
                         errors.append(f"{rel}: missing accessible label for chapter number {part_label},{i}")
+                    if f'title="Kapitel {part_label},{i}"' not in thread_html:
+                        errors.append(f"{rel}: missing title for chapter number {part_label},{i}")
+                    wrong_part = "II" if part_label == "I" else "I"
+                    if re.search(rf'Kapitel {wrong_part},\d+', thread_html):
+                        errors.append(f"{rel}: chapter-thread contains wrong part label Kapitel {wrong_part},…")
                 if current_chapter:
                     active_href = f'{chapter_base}/kapitel-{current_chapter:03d}.html'
                     active_link = re.search(rf'<a\b(?=[^>]*href="{re.escape(active_href)}")[^>]*>', thread_html)
@@ -171,6 +187,33 @@ def main() -> int:
             chips = re.search(r'<div class="chips">(.*?)</div>', text, re.S)
             if not chips or len(re.findall(r'<a class="chip"', chips.group(1))) != 4:
                 errors.append(f"{rel}: metadata chips must all be clickable links")
+            elif part_label == "II" and current_chapter:
+                expected_topics = {
+                    1: "beweis-und-praemissen",
+                    2: "erster-beweger",
+                    3: "unkoerperlichkeit-und-beweis",
+                    4: "einheit-und-beweis",
+                    5: "himmel-und-sphaeren",
+                    6: "engel-und-intellekte",
+                    7: "engel-und-intellekte",
+                    8: "engel-und-intellekte",
+                    9: "musik-der-sphaeren",
+                    10: "himmel-und-sphaeren",
+                    11: "himmel-und-sphaeren",
+                    12: "engel-und-intellekte",
+                    13: "schoepfung-und-beweis",
+                    14: "aristoteles-und-tora",
+                    15: "grenzen-des-verstandes",
+                    16: "schoepfung-und-beweis",
+                    17: "schoepfung-und-beweis",
+                    18: "schoepfung-und-beweis",
+                    19: "schoepfung-und-beweis",
+                    20: "schoepfung-und-beweis",
+                }
+                expected_topic = expected_topics.get(current_chapter)
+                chip_html = chips.group(1)
+                if expected_topic and f'{BASE}/themen/{expected_topic}.html' not in chip_html:
+                    errors.append(f"{rel}: expected thematic chip {expected_topic}")
         if HEBREW_RE.search(text) and not re.search(r"Quelle|Status|Ibn-Tibbon|Quellen", text, re.I):
             errors.append(f"{rel}: Hebrew text without visible source/status marker")
     if errors:
