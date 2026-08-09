@@ -67,26 +67,34 @@ document.addEventListener('DOMContentLoaded',()=>{
     s.src=`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(analyticsId)}`;
     document.head.appendChild(s);
   };
+  const unlockSite=()=>{
+    document.body.classList.remove('consent-required');
+    const banner=document.querySelector('.cookie-banner');
+    if(banner) banner.remove();
+  };
   const showConsent=()=>{
     if(!analyticsId||document.querySelector('.cookie-banner')) return;
+    document.body.classList.add('consent-required');
     const banner=document.createElement('section');
     banner.className='cookie-banner';
     banner.setAttribute('aria-label','Cookie-Hinweis');
-    banner.innerHTML=`<div><strong>Optionale Cookies</strong><p>Wir nutzen Google Analytics nur mit deiner Zustimmung, um öffentliche Leseseiten grob zu verbessern. Ohne Zustimmung bleibt Analytics aus.</p><a href="/alte-lesart/datenschutz.html">Datenschutz</a></div><div class="cookie-actions"><button type="button" data-consent="reject">Ablehnen</button><button type="button" data-consent="accept">Zustimmen</button></div>`;
+    banner.setAttribute('role','dialog');
+    banner.setAttribute('aria-modal','true');
+    banner.innerHTML=`<div class="cookie-card"><strong>Alte Lesart weiterbauen</strong><p>Damit die Bibliothek sinnvoll wachsen kann, messen wir mit Google Analytics, welche Themen, Kapitel und Lesepfade besonders interessieren — und welche noch zu wenig gefunden werden.</p><p>So entstehen die nächsten Ausbauschritte nicht ins Blaue hinein, sondern entlang der tatsächlichen Lektüre: mehr Tiefe dort, wo viel gelesen wird, und bessere Einstiege dort, wo Seiten untergehen.</p><p class="cookie-note">Wenn du Alte Lesart nutzt, stimmst du dieser Reichweitenmessung zu. Ohne Zustimmung ist die Nutzung der Website nicht möglich.</p><p><a href="/alte-lesart/datenschutz.html">Details zum Datenschutz</a></p><div class="cookie-actions"><button type="button" data-consent="accept">Einverstanden — weiter zur Bibliothek</button></div></div>`;
     document.body.appendChild(banner);
+    banner.querySelector('[data-consent="accept"]').focus();
     banner.addEventListener('click',(event)=>{
-      const btn=event.target.closest('[data-consent]');
+      const btn=event.target.closest('[data-consent="accept"]');
       if(!btn) return;
-      const accepted=btn.getAttribute('data-consent')==='accept';
-      try{ localStorage.setItem(consentKey,accepted?'accepted':'rejected'); }catch(_){}
-      banner.remove();
-      if(accepted) loadAnalytics();
+      try{ localStorage.setItem(consentKey,'accepted'); }catch(_){}
+      unlockSite();
+      loadAnalytics();
     });
   };
   let consent=null;
   try{ consent=localStorage.getItem(consentKey); }catch(_){ consent=null; }
   if(consent==='accepted') loadAnalytics();
-  else if(consent!=='rejected') showConsent();
+  else showConsent();
   document.querySelectorAll('.consent-reset').forEach((button)=>{
     button.addEventListener('click',()=>{
       try{ localStorage.removeItem(consentKey); }catch(_){}

@@ -75,13 +75,24 @@ def main() -> int:
         for label, needle in contrast_guards.items():
             if needle not in css:
                 errors.append(f"CSS contrast/geometry guard missing: {label}")
-        for needle in (".cookie-banner", ".cookie-actions", ".consent-reset"):
+        for needle in (".cookie-banner", ".cookie-actions", ".consent-reset", "body.consent-required", ".cookie-card"):
             if needle not in css:
                 errors.append(f"CSS consent guard missing: {needle}")
         if len(set(re.findall(r"body\.geo-\d\d\{--geo:([^;]+);", css))) < 30:
             errors.append("CSS geometry guard failed: expected 30 distinct page patterns")
     else:
         errors.append("Missing public CSS file assets/css/alte-lesart.css")
+    workflow_path = ROOT / ".github/workflows/pages.yml"
+    js_path = ROOT / "assets/js/alte-lesart.js"
+    if js_path.exists():
+        js = js_path.read_text(encoding="utf-8")
+        for needle in ("alte-lesart-cookie-consent", "consent-required", "data-consent=\"accept\"", "Ohne Zustimmung ist die Nutzung der Website nicht möglich"):
+            if needle not in js:
+                errors.append(f"JS consent guard missing: {needle}")
+        if "data-consent=\"reject\"" in js or "'rejected'" in js or '"rejected"' in js:
+            errors.append("JS consent gate must not offer or persist rejection")
+    else:
+        errors.append("Missing public JS file assets/js/alte-lesart.js")
     workflow_path = ROOT / ".github/workflows/pages.yml"
     if workflow_path.exists():
         workflow = workflow_path.read_text(encoding="utf-8")
