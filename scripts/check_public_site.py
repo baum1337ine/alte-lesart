@@ -96,24 +96,32 @@ def main() -> int:
         if rel.parts[:2] == ("werke", "fuehrer-der-unschluessigen") and rel.name.startswith("kapitel-"):
             chapter_match = re.search(r"kapitel-(\d{3})\.html", rel.name)
             current_chapter = int(chapter_match.group(1)) if chapter_match else None
+            if len(rel.parts) >= 4 and rel.parts[2] == "teil-ii":
+                part_label = "II"
+                chapter_base = f"{BASE}/werke/fuehrer-der-unschluessigen/teil-ii"
+                chapter_dir = ROOT / "werke/fuehrer-der-unschluessigen/teil-ii"
+            else:
+                part_label = "I"
+                chapter_base = f"{BASE}/werke/fuehrer-der-unschluessigen"
+                chapter_dir = ROOT / "werke/fuehrer-der-unschluessigen"
             thread = re.search(r'<div class="chapter-thread"[^>]*>(.*?)</div>', text, re.S)
             if not thread:
                 errors.append(f"{rel}: missing chapter-thread navigation")
             else:
                 thread_html = thread.group(1)
-                expected_chapters = len(list((ROOT / "werke/fuehrer-der-unschluessigen").glob("kapitel-*.html")))
+                expected_chapters = len(list(chapter_dir.glob("kapitel-*.html")))
                 if len(re.findall(r"<a\b", thread_html)) != expected_chapters:
                     errors.append(f"{rel}: chapter-thread must contain {expected_chapters} clickable links")
                 if re.search(r"<span\b", thread_html):
                     errors.append(f"{rel}: chapter-thread contains non-clickable span")
                 for i in range(1, expected_chapters + 1):
-                    href = f'{BASE}/werke/fuehrer-der-unschluessigen/kapitel-{i:03d}.html'
+                    href = f'{chapter_base}/kapitel-{i:03d}.html'
                     if href not in thread_html:
-                        errors.append(f"{rel}: missing clickable chapter number {i}")
-                    if f'aria-label="Kapitel I,{i} öffnen"' not in thread_html:
-                        errors.append(f"{rel}: missing accessible label for chapter number {i}")
+                        errors.append(f"{rel}: missing clickable chapter number {part_label},{i}")
+                    if f'aria-label="Kapitel {part_label},{i} öffnen"' not in thread_html:
+                        errors.append(f"{rel}: missing accessible label for chapter number {part_label},{i}")
                 if current_chapter:
-                    active_href = f'{BASE}/werke/fuehrer-der-unschluessigen/kapitel-{current_chapter:03d}.html'
+                    active_href = f'{chapter_base}/kapitel-{current_chapter:03d}.html'
                     active_link = re.search(rf'<a\b(?=[^>]*href="{re.escape(active_href)}")[^>]*>', thread_html)
                     if not active_link or 'aria-current="page"' not in active_link.group(0):
                         errors.append(f"{rel}: active chapter lacks aria-current")
