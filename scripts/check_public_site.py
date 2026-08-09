@@ -12,6 +12,7 @@ import re
 import sys
 from pathlib import Path
 from html.parser import HTMLParser
+from html import unescape
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "/alte-lesart"
@@ -100,6 +101,7 @@ def main() -> int:
             errors.append("Pages workflow must publish datenschutz.html")
     else:
         errors.append("Missing Pages workflow .github/workflows/pages.yml")
+    reading_blocks = {}
     for page in pages:
         text = page.read_text(encoding="utf-8")
         rel = page.relative_to(ROOT)
@@ -121,6 +123,20 @@ def main() -> int:
             if "G-D8TK9RQ0DE" in text and "window.ALTE_LESART_ANALYTICS_ID" not in text:
                 errors.append(f"{rel}: analytics id is not behind consent handoff")
         if rel.parts[:2] == ("werke", "fuehrer-der-unschluessigen") and rel.name.startswith("kapitel-"):
+            reading = re.search(r'<div class="reading-text">(.*?)</div>', text, re.S)
+            if reading:
+                plain = unescape(re.sub(r"<[^>]+>", " ", reading.group(1)))
+                plain = re.sub(r"\s+", " ", plain).strip().lower()
+                min_words = 300 if len(rel.parts) >= 4 and rel.parts[2] == "teil-ii" else 150
+                if len(plain.split()) < min_words:
+                    errors.append(f"{rel}: reading text is too thin ({len(plain.split())} words)")
+                digest = re.sub(r"[^a-zäöüß0-9 ]", "", plain)
+                if digest in reading_blocks:
+                    errors.append(f"{rel}: duplicate reading-text matches {reading_blocks[digest]}")
+                else:
+                    reading_blocks[digest] = rel
+            else:
+                errors.append(f"{rel}: missing reading-text block")
             chapter_match = re.search(r"kapitel-(\d{3})\.html", rel.name)
             current_chapter = int(chapter_match.group(1)) if chapter_match else None
             if len(rel.parts) >= 4 and rel.parts[2] == "teil-ii":
