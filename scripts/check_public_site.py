@@ -209,6 +209,11 @@ def main() -> int:
                     18: "schoepfung-und-beweis",
                     19: "schoepfung-und-beweis",
                     20: "schoepfung-und-beweis",
+                    21: "schoepfung-und-beweis",
+                    22: "schoepfung-und-beweis",
+                    23: "himmel-und-sphaeren",
+                    24: "grenzen-des-verstandes",
+                    25: "himmel-und-sphaeren",
                 }
                 expected_topic = expected_topics.get(current_chapter)
                 chip_html = chips.group(1)
