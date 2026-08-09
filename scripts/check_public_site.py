@@ -75,6 +75,9 @@ def main() -> int:
         for label, needle in contrast_guards.items():
             if needle not in css:
                 errors.append(f"CSS contrast/geometry guard missing: {label}")
+        for needle in (".cookie-banner", ".cookie-actions", ".consent-reset"):
+            if needle not in css:
+                errors.append(f"CSS consent guard missing: {needle}")
         if len(set(re.findall(r"body\.geo-\d\d\{--geo:([^;]+);", css))) < 30:
             errors.append("CSS geometry guard failed: expected 30 distinct page patterns")
     else:
@@ -93,6 +96,12 @@ def main() -> int:
             for core in CORE:
                 if core not in text:
                     errors.append(f"{rel}: missing core navigation link {core}")
+            if f"{BASE}/datenschutz.html" not in text:
+                errors.append(f"{rel}: missing privacy/consent link {BASE}/datenschutz.html")
+            if "googletagmanager.com/gtag/js" in text or "function gtag" in text or "gtag('config'" in text:
+                errors.append(f"{rel}: eager Google Analytics load before consent")
+            if "G-D8TK9RQ0DE" in text and "window.ALTE_LESART_ANALYTICS_ID" not in text:
+                errors.append(f"{rel}: analytics id is not behind consent handoff")
         if rel.parts[:2] == ("werke", "fuehrer-der-unschluessigen") and rel.name.startswith("kapitel-"):
             chapter_match = re.search(r"kapitel-(\d{3})\.html", rel.name)
             current_chapter = int(chapter_match.group(1)) if chapter_match else None

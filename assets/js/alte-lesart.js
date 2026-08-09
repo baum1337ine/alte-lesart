@@ -52,4 +52,46 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.addEventListener('scroll',update,{passive:true});
     window.addEventListener('resize',update);
   }
+
+  const consentKey='alte-lesart-cookie-consent';
+  const analyticsId=window.ALTE_LESART_ANALYTICS_ID;
+  const loadAnalytics=()=>{
+    if(!analyticsId||window.__alteLesartAnalyticsLoaded) return;
+    window.__alteLesartAnalyticsLoaded=true;
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=function(){window.dataLayer.push(arguments);};
+    window.gtag('js',new Date());
+    window.gtag('config',analyticsId,{anonymize_ip:true});
+    const s=document.createElement('script');
+    s.async=true;
+    s.src=`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(analyticsId)}`;
+    document.head.appendChild(s);
+  };
+  const showConsent=()=>{
+    if(!analyticsId||document.querySelector('.cookie-banner')) return;
+    const banner=document.createElement('section');
+    banner.className='cookie-banner';
+    banner.setAttribute('aria-label','Cookie-Hinweis');
+    banner.innerHTML=`<div><strong>Optionale Cookies</strong><p>Wir nutzen Google Analytics nur mit deiner Zustimmung, um öffentliche Leseseiten grob zu verbessern. Ohne Zustimmung bleibt Analytics aus.</p><a href="/alte-lesart/datenschutz.html">Datenschutz</a></div><div class="cookie-actions"><button type="button" data-consent="reject">Ablehnen</button><button type="button" data-consent="accept">Zustimmen</button></div>`;
+    document.body.appendChild(banner);
+    banner.addEventListener('click',(event)=>{
+      const btn=event.target.closest('[data-consent]');
+      if(!btn) return;
+      const accepted=btn.getAttribute('data-consent')==='accept';
+      try{ localStorage.setItem(consentKey,accepted?'accepted':'rejected'); }catch(_){}
+      banner.remove();
+      if(accepted) loadAnalytics();
+    });
+  };
+  let consent=null;
+  try{ consent=localStorage.getItem(consentKey); }catch(_){ consent=null; }
+  if(consent==='accepted') loadAnalytics();
+  else if(consent!=='rejected') showConsent();
+  document.querySelectorAll('.consent-reset').forEach((button)=>{
+    button.addEventListener('click',()=>{
+      try{ localStorage.removeItem(consentKey); }catch(_){}
+      showConsent();
+    });
+  });
+
 });
