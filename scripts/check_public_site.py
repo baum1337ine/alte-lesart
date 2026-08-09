@@ -82,6 +82,13 @@ def main() -> int:
             errors.append("CSS geometry guard failed: expected 30 distinct page patterns")
     else:
         errors.append("Missing public CSS file assets/css/alte-lesart.css")
+    workflow_path = ROOT / ".github/workflows/pages.yml"
+    if workflow_path.exists():
+        workflow = workflow_path.read_text(encoding="utf-8")
+        if "datenschutz.html" not in workflow:
+            errors.append("Pages workflow must publish datenschutz.html")
+    else:
+        errors.append("Missing Pages workflow .github/workflows/pages.yml")
     for page in pages:
         text = page.read_text(encoding="utf-8")
         rel = page.relative_to(ROOT)
