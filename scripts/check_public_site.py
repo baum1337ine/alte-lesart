@@ -24,14 +24,28 @@ class LinkParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.links = []
+        self.ids = set()
+        self.anchor_stack = []
+        self.nested_anchor_lines = []
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
-        if tag == "a" and attrs.get("href"):
-            self.links.append(attrs["href"])
+        if attrs.get("id"):
+            self.ids.add(attrs["id"])
+        if attrs.get("name"):
+            self.ids.add(attrs["name"])
+        if tag == "a":
+            if self.anchor_stack:
+                self.nested_anchor_lines.append(self.getpos()[0])
+            self.anchor_stack.append(self.getpos()[0])
+            if attrs.get("href"):
+                self.links.append(attrs["href"])
         if tag == "link" and attrs.get("href"):
             self.links.append(attrs["href"])
         if tag == "script" and attrs.get("src"):
             self.links.append(attrs["src"])
+    def handle_endtag(self, tag):
+        if tag == "a" and self.anchor_stack:
+            self.anchor_stack.pop()
 
 def public_html_files():
     for p in ROOT.rglob("*.html"):
@@ -107,12 +121,23 @@ def main() -> int:
         text = page.read_text(encoding="utf-8")
         rel = page.relative_to(ROOT)
         parser = LinkParser(); parser.feed(text)
+        for line in parser.nested_anchor_lines:
+            errors.append(f"{rel}: nested anchor tag near line {line}")
+        if re.search(r"\bPremium\b", text, re.I):
+            errors.append(f"{rel}: visitor-facing copy must not use marketing word Premium")
         for href in parser.links:
             if any(bad in href for bad in FORBIDDEN):
                 errors.append(f"{rel}: forbidden public link -> {href}")
             target = link_to_path(href)
             if target and not target.exists():
                 errors.append(f"{rel}: broken local link -> {href} ({target.relative_to(ROOT)})")
+            if "#" in href and not href.startswith(("http://", "https://", "mailto:", "tel:")):
+                fragment = href.split("#", 1)[1].split("?", 1)[0]
+                fragment_target = page if href.startswith("#") else target
+                if fragment and fragment_target and fragment_target.exists() and fragment_target.is_file():
+                    target_parser = LinkParser(); target_parser.feed(fragment_target.read_text(encoding="utf-8"))
+                    if fragment not in target_parser.ids:
+                        errors.append(f"{rel}: broken fragment link -> {href}")
         if not rel.parts[0] in {"assets"}:
             for core in CORE:
                 if core not in text:
@@ -265,6 +290,7 @@ def main() -> int:
             "kapitel-043.html",
             "kapitel-045.html",
             "Engel, Gleichnis und Stimme",
+            "engel-gleichnis-stimme",
             "kapitel-046.html",
             "kapitel-049.html",
             "Prophetische Leseregeln",
