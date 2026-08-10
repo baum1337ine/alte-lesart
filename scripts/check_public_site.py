@@ -148,12 +148,13 @@ def main() -> int:
                 errors.append(f"{rel}: eager Google Analytics load before consent")
             if "G-D8TK9RQ0DE" in text and "window.ALTE_LESART_ANALYTICS_ID" not in text:
                 errors.append(f"{rel}: analytics id is not behind consent handoff")
-        if rel.parts[:2] == ("werke", "fuehrer-der-unschluessigen") and rel.name.startswith("kapitel-"):
+        is_teil_iii_intro = rel.parts == ("werke", "fuehrer-der-unschluessigen", "teil-iii", "einleitung.html")
+        if rel.parts[:2] == ("werke", "fuehrer-der-unschluessigen") and (rel.name.startswith("kapitel-") or is_teil_iii_intro):
             reading = re.search(r'<div class="reading-text">(.*?)</div>', text, re.S)
             if reading:
                 plain = unescape(re.sub(r"<[^>]+>", " ", reading.group(1)))
                 plain = re.sub(r"\s+", " ", plain).strip().lower()
-                min_words = 300 if len(rel.parts) >= 4 and rel.parts[2] == "teil-ii" else 150
+                min_words = 300 if len(rel.parts) >= 4 and rel.parts[2] in {"teil-ii", "teil-iii"} else 150
                 if len(plain.split()) < min_words:
                     errors.append(f"{rel}: reading text is too thin ({len(plain.split())} words)")
                 digest = re.sub(r"[^a-zäöüß0-9 ]", "", plain)
@@ -161,7 +162,7 @@ def main() -> int:
                     errors.append(f"{rel}: duplicate reading-text matches {reading_blocks[digest]}")
                 else:
                     reading_blocks[digest] = rel
-                if len(rel.parts) >= 4 and rel.parts[2] == "teil-ii":
+                if len(rel.parts) >= 4 and rel.parts[2] in {"teil-ii", "teil-iii"}:
                     for paragraph in re.findall(r"<p>(.*?)</p>", reading.group(1), re.S):
                         paragraph_plain = unescape(re.sub(r"<[^>]+>", " ", paragraph))
                         paragraph_plain = re.sub(r"\s+", " ", paragraph_plain).strip().lower()
@@ -179,6 +180,10 @@ def main() -> int:
                 part_label = "II"
                 chapter_base = f"{BASE}/werke/fuehrer-der-unschluessigen/teil-ii"
                 chapter_dir = ROOT / "werke/fuehrer-der-unschluessigen/teil-ii"
+            elif len(rel.parts) >= 4 and rel.parts[2] == "teil-iii":
+                part_label = "III"
+                chapter_base = f"{BASE}/werke/fuehrer-der-unschluessigen/teil-iii"
+                chapter_dir = ROOT / "werke/fuehrer-der-unschluessigen/teil-iii"
             else:
                 part_label = "I"
                 chapter_base = f"{BASE}/werke/fuehrer-der-unschluessigen"
@@ -189,8 +194,11 @@ def main() -> int:
             else:
                 thread_html = thread.group(1)
                 expected_chapters = len(list(chapter_dir.glob("kapitel-*.html")))
-                if len(re.findall(r"<a\b", thread_html)) != expected_chapters:
-                    errors.append(f"{rel}: chapter-thread must contain {expected_chapters} clickable links")
+                expected_links = expected_chapters + (1 if part_label == "III" else 0)
+                if len(re.findall(r"<a\b", thread_html)) != expected_links:
+                    errors.append(f"{rel}: chapter-thread must contain {expected_links} clickable links")
+                if part_label == "III" and f'{chapter_base}/einleitung.html' not in thread_html:
+                    errors.append(f"{rel}: Teil-III chapter-thread missing Einleitung link")
                 if re.search(r"<span\b", thread_html):
                     errors.append(f"{rel}: chapter-thread contains non-clickable span")
                 for i in range(1, expected_chapters + 1):
@@ -201,14 +209,20 @@ def main() -> int:
                         errors.append(f"{rel}: missing accessible label for chapter number {part_label},{i}")
                     if f'title="Kapitel {part_label},{i}"' not in thread_html:
                         errors.append(f"{rel}: missing title for chapter number {part_label},{i}")
-                    wrong_part = "II" if part_label == "I" else "I"
-                    if re.search(rf'Kapitel {wrong_part},\d+', thread_html):
-                        errors.append(f"{rel}: chapter-thread contains wrong part label Kapitel {wrong_part},…")
+                    wrong_parts = [label for label in ("I", "II", "III") if label != part_label]
+                    for wrong_part in wrong_parts:
+                        if re.search(rf'Kapitel {wrong_part},\d+', thread_html):
+                            errors.append(f"{rel}: chapter-thread contains wrong part label Kapitel {wrong_part},…")
                 if current_chapter:
                     active_href = f'{chapter_base}/kapitel-{current_chapter:03d}.html'
                     active_link = re.search(rf'<a\b(?=[^>]*href="{re.escape(active_href)}")[^>]*>', thread_html)
                     if not active_link or 'aria-current="page"' not in active_link.group(0):
                         errors.append(f"{rel}: active chapter lacks aria-current")
+                elif is_teil_iii_intro:
+                    active_href = f'{chapter_base}/einleitung.html'
+                    active_link = re.search(rf'<a\b(?=[^>]*href="{re.escape(active_href)}")[^>]*>', thread_html)
+                    if not active_link or 'aria-current="page"' not in active_link.group(0):
+                        errors.append(f"{rel}: active Teil-III Einleitung lacks aria-current")
             chips = re.search(r'<div class="chips">(.*?)</div>', text, re.S)
             if not chips or len(re.findall(r'<a class="chip"', chips.group(1))) != 4:
                 errors.append(f"{rel}: metadata chips must all be clickable links")
@@ -268,6 +282,10 @@ def main() -> int:
                 chip_html = chips.group(1)
                 if expected_topic and f'{BASE}/themen/{expected_topic}.html' not in chip_html:
                     errors.append(f"{rel}: expected thematic chip {expected_topic}")
+            elif part_label == "III" and current_chapter:
+                chip_html = chips.group(1)
+                if f'{BASE}/themen/maaseh-merkavah.html' not in chip_html:
+                    errors.append(f"{rel}: expected thematic chip maaseh-merkavah")
         if HEBREW_RE.search(text) and not re.search(r"Quelle|Status|Ibn-Tibbon|Quellen", text, re.I):
             errors.append(f"{rel}: Hebrew text without visible source/status marker")
     lesepfade = ROOT / "lesepfade.html"
@@ -295,9 +313,14 @@ def main() -> int:
             "kapitel-049.html",
             "Prophetische Leseregeln",
             "Ursachen und Zuschreibung",
+            "maaseh-merkavah",
+            "Ezechiels Wagenvision lesen",
+            "teil-iii/einleitung.html",
+            "teil-iii/kapitel-002.html",
+            "Maaseh Merkavah",
         ):
             if needle not in text:
-                errors.append(f"lesepfade.html: missing curated Teil-II foundation route marker {needle}")
+                errors.append(f"lesepfade.html: missing curated route marker {needle}")
         if "Kapitel 1–20" in text or "II,1–II,20" in text:
             errors.append("lesepfade.html: stale Teil-II range still visible")
     for chapter in range(21, 50):
