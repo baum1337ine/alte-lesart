@@ -221,6 +221,26 @@ def main() -> int:
                     errors.append(f"{rel}: expected thematic chip {expected_topic}")
         if HEBREW_RE.search(text) and not re.search(r"Quelle|Status|Ibn-Tibbon|Quellen", text, re.I):
             errors.append(f"{rel}: Hebrew text without visible source/status marker")
+    lesepfade = ROOT / "lesepfade.html"
+    if lesepfade.exists():
+        text = lesepfade.read_text(encoding="utf-8")
+        for needle in (
+            "Schöpfung, Ewigkeit und Gewissheit",
+            "Naturordnung ohne falsche Notwendigkeit",
+            "kapitel-013.html",
+            "kapitel-021.html",
+        ):
+            if needle not in text:
+                errors.append(f"lesepfade.html: missing curated Teil-II foundation route marker {needle}")
+        if "Kapitel 1–20" in text or "II,1–II,20" in text:
+            errors.append("lesepfade.html: stale Teil-II range still visible")
+    for chapter in range(21, 26):
+        page = ROOT / f"werke/fuehrer-der-unschluessigen/teil-ii/kapitel-{chapter:03d}.html"
+        if page.exists():
+            text = page.read_text(encoding="utf-8")
+            generic = f"Kapitel II,{chapter} gehört zum erweiterten Teil-II-Faden"
+            if generic in text:
+                errors.append(f"{page.relative_to(ROOT)}: generic foundation callout not replaced")
     if errors:
         print("QUALITY CHECK FAILED")
         for e in errors:
