@@ -231,6 +231,9 @@ def main() -> int:
                     40: "prophetie-und-tora",
                     41: "prophetie-und-tora",
                     42: "traum-und-vision",
+                    43: "traum-und-vision",
+                    44: "gleichnis-und-prophetie",
+                    45: "stimme-und-offenbarung",
                 }
                 expected_topic = expected_topics.get(current_chapter)
                 chip_html = chips.group(1)
@@ -255,12 +258,15 @@ def main() -> int:
             "kapitel-038.html",
             "kapitel-042.html",
             "Prophetie wird öffentlich",
+            "kapitel-043.html",
+            "kapitel-045.html",
+            "Engel, Gleichnis und Stimme",
         ):
             if needle not in text:
                 errors.append(f"lesepfade.html: missing curated Teil-II foundation route marker {needle}")
         if "Kapitel 1–20" in text or "II,1–II,20" in text:
             errors.append("lesepfade.html: stale Teil-II range still visible")
-    for chapter in range(21, 43):
+    for chapter in range(21, 46):
         page = ROOT / f"werke/fuehrer-der-unschluessigen/teil-ii/kapitel-{chapter:03d}.html"
         if page.exists():
             text = page.read_text(encoding="utf-8")
